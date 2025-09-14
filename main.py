@@ -74,7 +74,10 @@ elif method =="4":
     stop_search(stop_data)
 else:
     print("invalid input")
-search_bus = input("What bus are you searching for? (if none, leave blank) \n").strip()
+if input("Would you like to filter buses? Y/N\n").strip().upper() == "Y":
+    search_bus = input("What bus number would you like to filter for?\n").strip()
+else:
+    search_bus = ""
 
 url = f"https://api.tfl.gov.uk/StopPoint/{stop_ID}/Arrivals?app_id={app_id}&app_key={app_key}"
 response = requests.get(url)
