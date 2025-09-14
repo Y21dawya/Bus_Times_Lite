@@ -1,8 +1,11 @@
 import requests
 import asyncio
 import pandas as pd
+import os
 
-tr_stops = pd.read_csv("NUMBAT NaPTANs.csv")
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+tr_stops = pd.read_csv("train stops.csv")
 seq = pd.read_csv("bus-sequences.csv")
 stops = pd.read_csv("bus-stops.csv")
 
