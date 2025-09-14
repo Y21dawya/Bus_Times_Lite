@@ -81,8 +81,8 @@ else:
 
 url = f"https://api.tfl.gov.uk/StopPoint/{stop_ID}/Arrivals?app_id={app_id}&app_key={app_key}"
 response = requests.get(url)
-
 if response.status_code == 200:
+    print(f"According to {url}, the following buses are arriving at stop {stop_ID}:")
     data = response.json()
     if not data:
         print("No arrival information available.")
