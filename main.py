@@ -88,8 +88,8 @@ if response.status_code == 200:
         print("No arrival information available.")
     for bus in data:
         if search_bus == "":
-            print(f"{bus['modeName']} {bus['lineName']} to {bus['destinationName']} arriving in {bus['timeToStation'] // 60} minutes, {bus['timeToStation'] % 60} seconds. ")
+            print(f"{bus['modeName']} {bus['lineName']} to {bus['destinationName']} arriving in {bus['timeToStation'] // 60} minutes, {bus['timeToStation'] % 60} seconds, numberplate {bus['vehicleId']}.")
         elif bus['lineName'] == search_bus:
-            print(f"{bus['modeName']} {bus['lineName']} to {bus['destinationName']} arriving in {bus['timeToStation'] // 60} minutes, {bus['timeToStation'] % 60} seconds.")
+            print(f"{bus['modeName']} {bus['lineName']} to {bus['destinationName']} arriving in {bus['timeToStation'] // 60} minutes, {bus['timeToStation'] % 60} seconds, numberplate {bus['vehicleId']}.")
 else:
     print(f"Error: {response.status_code} - {response.text}")
