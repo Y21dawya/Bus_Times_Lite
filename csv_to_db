@@ -1,0 +1,42 @@
+import sqlite3 as sql
+import pandas as pd
+import os
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+stops_csv = pd.read_csv("bus-stops.csv")
+seq_csv = pd.read_csv("bus-sequences.csv")
+tr_stops_csv = pd.read_csv("train stops.csv")
+
+os.remove("stops.db")
+os.remove("seq.db")
+os.remove("tr_stops.db")
+
+stops = sql.connect('stops.db')
+seq = sql.connect('seq.db')
+tr_stops = sql.connect('tr_stops.db')
+
+cursor1 = stops.cursor()
+cursor2 = seq.cursor()
+cursor3 = tr_stops.cursor()
+
+cursor1.execute('''CREATE TABLE bus_stops (Naptan_Atco TEXT, Stop_Name TEXT, Stop_Code_LBSL TEXT, Heading INTEGER, Stop_Code TEXT)''')
+cursor2.execute('''CREATE TABLE bus_sequences (Route TEXT, Route_Running TEXT, Naptan_Atco TEXT, Stop_Sequence INTEGER)''')
+cursor3.execute('''CREATE TABLE train_stops (Naptan_Atco TEXT, Stop_Name TEXT)''')
+
+for _, row in stops_csv.iterrows():
+    cursor1.execute("INSERT INTO bus_stops VALUES (?, ?, ?, ?, ?)", (row['Naptan_Atco'], row['Stop_Name'], row['Stop_Code_LBSL'], row['Heading'], row['Bus_Stop_Code']))
+
+for _, row in seq_csv.iterrows():
+    cursor2.execute("INSERT INTO bus_sequences VALUES (?, ?, ?, ?)", (row['Route'], row['Run'], row['Naptan_Atco'], row['Sequence']))
+
+for _, row in tr_stops_csv.iterrows():
+    cursor3.execute("INSERT INTO train_stops VALUES (?, ?)", (row['NaPTAN code'], row['Station name']))
+
+stops.commit()
+seq.commit()
+tr_stops.commit()
+
+stops.close()
+seq.close()
+tr_stops.close()
